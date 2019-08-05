@@ -1,8 +1,15 @@
 # Ruby Kart Race
 
-Project that simulates a race. It creates the race podium, the pilots and their laps using an input file called `entry.txt` that is stored in the project's root folder.
+Project that simulates a race. It creates the race podium, the drivers and their laps using an input file called `entry.txt` that is stored in the project's root folder.
+
+The software will show the race podium, as well as some statistics about the drivers:
+
+- Fastest Lap
+- Average speed
+- Race time
 
 #### Dependencies
+
 - Ruby 2.4.1
 - RSpec 3.8
 - require_all 2.0
@@ -43,6 +50,24 @@ To execute it using the `entry.txt` file already present inside this repository,
 If you want to use another log file, paste it inside this repository and use:
 
 `ruby main.rb <file_name>`
+
+#### Output
+
+The program will output something along these lines:
+
+```
+A volta mais rápida da corrida é de F.MASSA
+E o tempo da volta foi 01:02.768
+
+Posição: 1
+038 - F.MASSA
+Voltas: 4
+Melhor volta: 01:02.768
+Tempo total de prova: 04:11.577
+Velocidade média: 44.246
+```
+
+Based on the info loaded from the file. Each block represents a driver.
 
 #### Tests
 
