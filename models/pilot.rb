@@ -1,13 +1,12 @@
 # frozen_string_literal:true
 
+require_relative '../utils/converter'
 require_relative '../services/create_lap_service'
-require_relative '../services/convert_time_service'
-require_relative '../services/race_best_lap_service'
-require_relative '../services/race_total_time_service'
-require_relative '../services/race_average_speed_service'
+require_relative '../services/generate_pilot_race_info_service'
 
 # Class that control every pilot found on the input file and each of their laps
 class Pilot
+  extend Utils
   attr_accessor :id, :name, :laps, :hour_finished
 
   def initialize(id, name)
@@ -18,7 +17,7 @@ class Pilot
 
   def register_lap(hour, number, time, average_speed)
     @laps << Service::CreateLapService.new(number, time, average_speed).create
-    @hour_finished = Service::ConvertTimeService.new(hour).convert if finished?
+    @hour_finished = Utils::Converter.convert_time(hour) if finished?
   end
 
   def finished?
@@ -26,14 +25,20 @@ class Pilot
   end
 
   def best_lap
-    Service::RaceBestLapService.new(@laps).execute
+    Service::GeneratePilotRaceInfoService.new(@laps).best_lap
   end
 
   def total_race_time
-    Service::RaceTotalTimeService.new(@laps).execute
+    Service::GeneratePilotRaceInfoService.new(@laps).total_race_time
   end
 
   def race_average_speed
-    Service::RaceAverageSpeedService.new(@laps).execute
+    Service::GeneratePilotRaceInfoService.new(@laps).average_speed
+  end
+
+  private
+
+  def <=>(other)
+    hour_finished <=> other.hour_finished
   end
 end

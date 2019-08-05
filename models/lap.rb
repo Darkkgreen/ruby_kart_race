@@ -1,16 +1,16 @@
 # frozen_string_literal:true
 
-require_relative '../services/convert_lap_time_service'
-require_relative '../services/convert_average_speed_service'
+require_relative '../utils/converter'
 
 # Class that controls every lap found on the input file
 class Lap
+  extend Utils
   attr_accessor :number, :time, :avgspd
 
   def initialize(lap_number, lap_time, avgspd)
     @number = lap_number
-    @time = Service::ConvertLapTimeService.new(lap_time).convert
-    @avgspd = Service::ConvertAverageSpeedService.new(avgspd).convert
+    @time = Utils::Converter.convert_time(lap_time)
+    @avgspd = Utils::Converter.convert_speed(avgspd)
   end
 
   private

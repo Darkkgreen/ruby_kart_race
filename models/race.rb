@@ -20,6 +20,7 @@ class Race
                                          entry[5], entry[6]).execute
 
     @podium << pilot if pilot.finished?
+    @podium.sort!
   end
 
   def results

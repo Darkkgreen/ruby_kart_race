@@ -1,6 +1,6 @@
 # frozen_string_literal:true
 
-require_relative '../classes/lap'
+require_relative '../models/lap'
 
 module Service
   # Service that correctly creates the lap

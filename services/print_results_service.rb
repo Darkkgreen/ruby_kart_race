@@ -1,7 +1,5 @@
 # frozen_string_literal:true
 
-require_relative 'convert_lap_time_service'
-
 module Service
   # Service that register the pilot lap
   class PrintResultsService
@@ -14,11 +12,15 @@ module Service
       @podium.each_with_index do |racer, index|
         print_pilot_info(racer, index)
         print_calculated_info(racer)
-        puts "\n" if index != @podium.count - 1
+        new_line(index)
       end
     end
 
     private
+
+    def new_line(index)
+      puts "\n" if index != @podium.count - 1
+    end
 
     def print_pilot_info(pilot, index)
       puts "Posição: #{index + 1}"

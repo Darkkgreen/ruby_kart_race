@@ -1,6 +1,6 @@
 # frozen_string_literal:true
 
-require_relative '../classes/pilot'
+require_relative '../models/pilot'
 
 module Service
   # Service that returns a pilot, either finding it or creating it
