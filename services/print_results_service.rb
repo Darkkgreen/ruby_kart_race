@@ -9,6 +9,11 @@ module Service
     end
 
     def execute
+      fastest = fastest_lap
+      puts "A volta mais rápida da corrida é de #{fastest.name}"
+      puts "E o tempo da volta foi #{fastest.best_lap}\n"
+      puts "\n"
+
       @podium.each_with_index do |racer, index|
         print_pilot_info(racer, index)
         print_calculated_info(racer)
@@ -17,6 +22,17 @@ module Service
     end
 
     private
+
+    def fastest_lap
+      fastest = nil
+      @podium.each do |racer|
+        if fastest.nil? || fastest.best_lap.to_f > racer.best_lap.to_f
+          fastest = racer
+        end
+      end
+
+      fastest
+    end
 
     def new_line(index)
       puts "\n" if index != @podium.count - 1
