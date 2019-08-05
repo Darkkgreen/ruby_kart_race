@@ -1,9 +1,5 @@
 # frozen_string_literal:true
 
-require_relative '../utils/converter'
-require_relative '../services/create_lap_service'
-require_relative '../services/generate_pilot_race_info_service'
-
 # Class that control every pilot found on the input file and each of their laps
 class Pilot
   extend Utils
@@ -11,8 +7,14 @@ class Pilot
 
   def initialize(id, name)
     @id = id
+    raise TypeError if @id.to_i.zero?
+
     @name = name
     @laps = []
+  rescue TypeError
+    puts 'Wrong pilot id'
+    puts 'Please check your file'
+    raise TypeError
   end
 
   def register_lap(hour, number, time, average_speed)

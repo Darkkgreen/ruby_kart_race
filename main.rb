@@ -1,8 +1,9 @@
 # frozen_string_literal:true
 
-require_relative 'models/race'
-require_relative 'services/print_results_service'
-require_relative 'services/read_file_service'
+require 'require_all'
+require_all 'utils'
+require_all 'models'
+require_all 'services'
 
 @race = Race.new
 Service::ReadFileService.new(ARGV[0].nil? ? 'entry.txt' : ARGV[0],

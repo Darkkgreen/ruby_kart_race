@@ -1,9 +1,5 @@
 # frozen_string_literal:true
 
-require_relative 'pilot'
-require_relative '../services/invoke_pilot_service'
-require_relative '../services/register_pilot_lap_service'
-
 # Class that defines the Race, podium and the pilots participating
 class Race
   attr_accessor :pilots, :podium
@@ -14,16 +10,36 @@ class Race
   end
 
   def read_lap(entry)
-    pilot = Service::InvokePilotService.new(pilots, entry[1],
-                                            entry[3]).execute
-    Service::RegisterPilotLapService.new(pilot, entry[0], entry[4],
-                                         entry[5], entry[6]).execute
+    info = hash(entry)
+    pilot = Service::InvokePilotService.new(pilots,
+                                            info[:id],
+                                            info[:name]).execute
+    Service::RegisterPilotLapService.new(pilot,
+                                         info[:hour],
+                                         info[:lap_number],
+                                         info[:lap_time],
+                                         info[:lap_avg]).execute
 
-    @podium << pilot if pilot.finished?
-    @podium.sort!
+    update_podium(pilot)
   end
 
   def results
     podium
+  end
+
+  private
+
+  def update_podium(pilot)
+    @podium << pilot if pilot.finished?
+    @podium.sort!
+  end
+
+  def hash(entry)
+    { hour: entry[0],
+      id: entry[1],
+      name: entry[3],
+      lap_number: entry[4],
+      lap_time: entry[5],
+      lap_avg: entry[6] }
   end
 end
