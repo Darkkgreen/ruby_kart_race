@@ -1,7 +1,7 @@
 # frozen_string_literal:true
 
 module Service
-  # Service that register the pilot lap
+  # Service that prints the race results
   class PrintResultsService
     def initialize(podium)
       @podium = podium
